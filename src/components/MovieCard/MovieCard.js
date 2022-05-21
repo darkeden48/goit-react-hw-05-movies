@@ -1,9 +1,10 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import MovCar from './MovieCard.module.css';
 import { PropTypes } from 'prop-types';
 
 export default function MovieCard({ film }) {
-  console.log(film);
+  const location = useLocation();
+  
   return (
     <div>
       <div className={MovCar.movieCard}>
@@ -32,10 +33,10 @@ export default function MovieCard({ film }) {
       <h2>Additional information</h2>
       <ul className={MovCar.additoins}>
         <li>
-          <NavLink to={'cast'}>Cast</NavLink>
+          <NavLink to={'cast'} state={location.state}>Cast</NavLink>
         </li>
         <li>
-          <NavLink to={'reviews'}>Reviews</NavLink>
+          <NavLink to={'reviews'} state={location.state}>Reviews</NavLink>
         </li>
       </ul>
     </div>
@@ -48,7 +49,7 @@ MovieCard.propTypes = {
   backdrop_path: PropTypes.string,
   vote_count: PropTypes.number,
   vote_average: PropTypes.number,
-  genes: PropTypes.arrayOf,
+  genres: PropTypes.arrayOf(PropTypes.string),
   id: PropTypes.number,
   name: PropTypes.string,
 };

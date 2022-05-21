@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useLocation, Outlet, useNavigate,useSearchParams, NavLink } from 'react-router-dom';
+import { useLocation, Outlet, useNavigate} from 'react-router-dom';
 import MovieCard from '../components/MovieCard/MovieCard';
 
 export default function MovieDetails() {
@@ -8,9 +8,9 @@ export default function MovieDetails() {
   const navigate = useNavigate();
   const { movieId } = useParams();
   const [film, setFilm] = useState([]);
-  const [searchParams] = useSearchParams();
-  const search = searchParams.get('query');
-console.log(search)
+  // const [searchParams] = useSearchParams();
+  // const search = searchParams.get('query');
+
  useEffect(() => {
     if (!film) {
       return;
@@ -32,14 +32,13 @@ console.log(search)
 
   const onGoBack = () => {
     navigate(location?.state?.from ?? '/');
-    
   };
 
   return (
     <div>
-    <button type="button" onClick={onGoBack}>
-    Go BACK
-  </button>
+      <button type="button" onClick={onGoBack}>
+        Go BACK
+      </button>
       <MovieCard film={film} />
       <Outlet />
     </div>

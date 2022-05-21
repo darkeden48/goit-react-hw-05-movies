@@ -9,19 +9,15 @@ import Search from '../components/Search/Search';
 
 export default function MoviesPage({ onSubmit }) {
   const [movieName, setMovieName] = useState([]);
-  const [query, setQuery] = useState('');
+  // const [query, setQuery] = useState('');
   const [error, setError] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams(undefined);
- 
-    const searched=searchParams.get('query');
+  const [searchParams] = useSearchParams(undefined);
+  const searched=searchParams.get('query');
 
-  
-  console.log(query)
   useEffect(() => {
     if (searched === null) {
-      console.log('popa')
       return;
     }
     fetch(
@@ -43,12 +39,10 @@ export default function MoviesPage({ onSubmit }) {
   }, [searched]);
 
   const handleFormSubmit = keyWord => {
-    setQuery(keyWord);
+    // setQuery(keyWord);
     navigate({ ...location, search: `query=${keyWord}` });
   };
-  console.log(movieName)
-  console.log(query)
-  console.log(searched)
+ 
   return (
     <div>
       <Search onSubmit={handleFormSubmit} />
