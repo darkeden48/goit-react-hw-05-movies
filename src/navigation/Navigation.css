@@ -1,0 +1,15 @@
+nav {
+  padding: 15px 30px;
+  background-color: rgba(255, 228, 196, 0.406);
+}
+nav a {
+  margin-right: 20px;
+  font-style: oblique;
+  font-size: larger;
+}
+.link {
+  color: black;
+}
+.active {
+  color: brown;
+}
