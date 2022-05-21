@@ -10,36 +10,50 @@ import Search from '../components/Search/Search';
 export default function MoviesPage({ onSubmit }) {
   const [movieName, setMovieName] = useState([]);
   const [query, setQuery] = useState('');
-  // const [searched, setSearch] = useState([]);
+  const [error, setError] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams(undefined);
+ 
+    const searched=searchParams.get('query');
 
-  const search = searchParams.get('query');
-  console.log(location);
-  console.log(search)
+  
+  console.log(query)
   useEffect(() => {
-    if (query === '') {
+    if (searched === null) {
+      console.log('popa')
       return;
     }
     fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${query}&api_key=070151ea430b4e74dbca9bca592b262c`,
+      `https://api.themoviedb.org/3/search/movie?query=${searched}&api_key=070151ea430b4e74dbca9bca592b262c`,
     )
       .then(response => response.json())
-      .then(data => data.results)
-      .then(setMovieName);
-  }, [query]);
+      .then(data => {  
+        if (data.results.length > 0) {
+        setMovieName(data.results);
+        setError(false)
+        return
+      }
+      throw Error();
+      })
+      .catch(error=>{
+        setError(true)
+      })
+    
+  }, [searched]);
 
   const handleFormSubmit = keyWord => {
     setQuery(keyWord);
-    navigate({ ...location, search: `query=${search}` });
+    navigate({ ...location, search: `query=${keyWord}` });
   };
-
+  console.log(movieName)
+  console.log(query)
+  console.log(searched)
   return (
     <div>
       <Search onSubmit={handleFormSubmit} />
       <ul>
-        {movieName &&
+        {movieName&&!error&&
           movieName.map(movie => (
             <li key={movie.id}>
               <Link to={`/movies/${movie.id}`}
@@ -49,8 +63,9 @@ export default function MoviesPage({ onSubmit }) {
                 {movie.original_title}{' '}
               </Link>
             </li>
-          ))}
+            ))}
       </ul>
+      {error&&(<h1>This film it`s not found</h1>)}
     </div>
   );
 }

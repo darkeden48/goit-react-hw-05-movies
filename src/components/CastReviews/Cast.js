@@ -31,10 +31,8 @@ export default function Cast() {
                 />
               ) : (
                 <img
-                  src={
-                    'https://icon-library.com/images/no-picture-available-icon/no-picture-available-icon-20.jpg'
-                  }
-                  alt={'No poster'}
+                  src='https://westsiderc.org/wp-content/uploads/2019/08/Image-Not-Available.png'
+                  alt='No poster'
                   width={100}
                 />
               )}
